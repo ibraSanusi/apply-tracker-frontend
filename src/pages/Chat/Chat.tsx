@@ -1,5 +1,7 @@
 import Header from "../../components/Header";
 import SearchInput from "../../components/SearchInput.tsx";
+import ApplicationCard from "../../components/ApplicationCard.tsx";
+
 
 export default function Chat() {
     return (
@@ -12,6 +14,8 @@ export default function Chat() {
                 </div>
 
                 <SearchInput />
+
+                <ApplicationCard id={1} position="Product Manager" company="Stripe" appliedDate={new Date()} status="sent" />
             </main>
         </div>
     );
