@@ -1,9 +1,15 @@
-
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import Login from './pages/Login/Login';
-import Register from './pages/Register/Register';
-import Chat from './pages/Chat/Chat';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import Applications from "./pages/Applications/Applications";
+import Menu from "./components/layouts/Menu";
+import "./App.css";
 
 const PrivateRoute = ({ children }: any) => {
   const { token } = useAuth();
@@ -17,14 +23,25 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Navigate to="/login" />} />
-          {/* Placeholder for other routes */}
           <Route path="/register" element={<Register />} />
-          <Route path="/verify-email" element={<div className="p-8 text-center">Verify Email Page Placeholder</div>} />
-          <Route path="/chat" element={
-            <PrivateRoute>
-              <Chat />
-            </PrivateRoute>
-          } />
+          <Route
+            path="/verify-email"
+            element={
+              <div className="p-8 text-center">
+                Verify Email Page Placeholder
+              </div>
+            }
+          />
+          <Route
+            path="/applications"
+            element={
+              <PrivateRoute>
+                <Menu>
+                  <Applications />
+                </Menu>
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Router>
     </AuthProvider>
