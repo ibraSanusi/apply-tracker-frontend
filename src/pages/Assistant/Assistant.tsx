@@ -3,8 +3,11 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Send, User, Bot, Loader2 } from "lucide-react";
 import { assistantService } from "../../services/assistant.service";
+import { applicationsService } from "../../services/applications.service";
 import { cvTemplate } from "../../lib/constants";
 import { useAuth } from "../../context/AuthContext";
+import SaveToast from "../../components/Assistant/SaveToast";
+import AssistantMenu from "../../components/Assistant/AssistantMenu";
 
 interface Message {
   id: string;
@@ -16,6 +19,10 @@ export default function Assistant() {
   const [jobDescription, setJobDescription] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [showSaveToast, setShowSaveToast] = useState(false);
+  const [hasPendingSave, setHasPendingSave] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastResponse, setLastResponse] = useState("");
   const { user } = useAuth();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -50,7 +57,7 @@ export default function Assistant() {
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-      
+
       const assistantMessageId = (Date.now() + 1).toString();
       const assistantMessage: Message = {
         id: assistantMessageId,
@@ -73,10 +80,14 @@ export default function Assistant() {
           prev.map((msg) =>
             msg.id === assistantMessageId
               ? { ...msg, content: accumulatedContent }
-              : msg
-          )
+              : msg,
+          ),
         );
       }
+
+      setLastResponse(accumulatedContent);
+      setShowSaveToast(true);
+      setHasPendingSave(true);
     } catch (error) {
       console.error("Error in chat:", error);
       setMessages((prev) => [
@@ -92,6 +103,40 @@ export default function Assistant() {
     }
   };
 
+  const handleSaveApplication = async () => {
+    if (!lastResponse) return;
+
+    setIsSaving(true);
+    try {
+      const cleanResponse = lastResponse
+        .replace(/```json/g, "")
+        .replace(/```/g, "");
+
+      const data = JSON.parse(cleanResponse);
+      const payload = {
+        ...data,
+        cv: JSON.stringify(data.cv),
+      };
+
+      // Sanitize payload to prevent 400 errors from backend
+      if (payload.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+        delete payload.email;
+      }
+      if (payload.salary) {
+        payload.salary = Number(String(payload.salary).replace(/[^0-9.]/g, ""));
+        if (isNaN(payload.salary)) delete payload.salary;
+      }
+
+      await applicationsService.save(payload);
+      setShowSaveToast(false);
+      setHasPendingSave(false);
+    } catch (error) {
+      console.error("Error saving application:", error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)] max-w-4xl mx-auto bg-white/50 backdrop-blur-md rounded-2xl border border-white/20 shadow-xl overflow-hidden">
       {/* Header */}
@@ -101,7 +146,9 @@ export default function Assistant() {
         </div>
         <div>
           <h2 className="text-lg font-bold">AI Assistant</h2>
-          <p className="text-xs text-white/70">Personalized Application Advice</p>
+          <p className="text-xs text-white/70">
+            Personalized Application Advice
+          </p>
         </div>
       </div>
 
@@ -117,7 +164,8 @@ export default function Assistant() {
                 ¡Hola, {user?.name}!
               </h3>
               <p className="text-slate-600 max-w-xs mx-auto">
-                Pega la descripción de la oferta de trabajo y te ayudaré a adaptar tu CV.
+                Pega la descripción de la oferta de trabajo y te ayudaré a
+                adaptar tu CV.
               </p>
             </div>
           </div>
@@ -162,7 +210,9 @@ export default function Assistant() {
             </div>
             <div className="bg-white border border-slate-100 rounded-2xl rounded-tl-none px-5 py-3 shadow-sm flex items-center gap-2">
               <Loader2 size={16} className="animate-spin text-primary" />
-              <span className="text-sm text-slate-500 italic">Analizando oferta...</span>
+              <span className="text-sm text-slate-500 italic">
+                Analizando oferta...
+              </span>
             </div>
           </div>
         )}
@@ -171,6 +221,13 @@ export default function Assistant() {
 
       {/* Input Area */}
       <div className="p-4 bg-white border-t border-slate-100">
+        {/* Save Action Manual Menu */}
+        <AssistantMenu
+          hasPendingSave={hasPendingSave && !showSaveToast}
+          onShowToast={() => setShowSaveToast(true)}
+          isSaving={isSaving}
+          className="mb-4 rounded-xl"
+        />
         <div className="relative flex items-end gap-2 max-w-3xl mx-auto">
           <textarea
             className="flex-1 min-h-[56px] max-h-40 p-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none transition-all"
@@ -204,6 +261,15 @@ export default function Assistant() {
           Presiona Enter para enviar • Shift + Enter para nueva línea
         </p>
       </div>
+
+
+      {/* Save Toast */}
+      <SaveToast
+        isVisible={showSaveToast}
+        isSaving={isSaving}
+        onSave={handleSaveApplication}
+        onDismiss={() => setShowSaveToast(false)}
+      />
     </div>
   );
 }
