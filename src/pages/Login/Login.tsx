@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { authService } from '../../services/auth.service';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import { authService } from "../../services/auth.service";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,14 +23,14 @@ const Login = () => {
     try {
       const response = await authService.login(email, password);
       login(response.data, response.token);
-      
+
       if (response.data.isVerified) {
-        navigate('/chat');
+        navigate("/assistant");
       } else {
-        navigate('/verify-email');
+        navigate("/verify-email");
       }
     } catch (err: any) {
-      setError(err.message || 'Error occurred during sign in');
+      setError(err.message || "Error occurred during sign in");
     } finally {
       setIsLoading(false);
     }
@@ -52,11 +52,19 @@ const Login = () => {
         {/* Social Login Section */}
         <div className="grid grid-cols-2 gap-4">
           <button className="flex items-center justify-center gap-3 px-4 py-3 bg-white border border-transparent rounded-lg hover:bg-gray-50 transition-all duration-200 shadow-sm text-sm font-semibold text-slate-700">
-            <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+            <img
+              src="https://www.google.com/favicon.ico"
+              alt="Google"
+              className="w-5 h-5"
+            />
             <span>Google</span>
           </button>
           <button className="flex items-center justify-center gap-3 px-4 py-3 bg-white border border-transparent rounded-lg hover:bg-gray-50 transition-all duration-200 shadow-sm text-sm font-semibold text-slate-700">
-            <img src="https://github.githubassets.com/favicons/favicon.png" alt="Github" className="w-5 h-5" />
+            <img
+              src="https://github.githubassets.com/favicons/favicon.png"
+              alt="Github"
+              className="w-5 h-5"
+            />
             <span>Github</span>
           </button>
         </div>
@@ -103,7 +111,11 @@ const Login = () => {
               <label className="text-sm font-medium text-slate-700">
                 Password
               </label>
-              <Link to="/recover-password" title="Forgot password?" className="text-sm font-semibold text-primary hover:text-primary-light transition-colors">
+              <Link
+                to="/recover-password"
+                title="Forgot password?"
+                className="text-sm font-semibold text-primary hover:text-primary-light transition-colors"
+              >
                 Forgot password?
               </Link>
             </div>
@@ -112,7 +124,7 @@ const Login = () => {
                 <Lock className="w-3 h-[15px] text-[#757684] group-focus-within:text-primary transition-colors" />
               </div>
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 required
                 className="w-full pl-11 pr-12 py-4 bg-[#F2F4F7] border-0 rounded-lg focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-[#757684]"
                 placeholder="••••••••"
@@ -137,7 +149,10 @@ const Login = () => {
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
-            <label htmlFor="remember" className="text-sm text-slate-700 cursor-pointer">
+            <label
+              htmlFor="remember"
+              className="text-sm text-slate-700 cursor-pointer"
+            >
               Remember me for 30 days
             </label>
           </div>
@@ -150,7 +165,7 @@ const Login = () => {
             {isLoading ? (
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
-              'Sign In'
+              "Sign In"
             )}
           </button>
         </form>
@@ -158,18 +173,27 @@ const Login = () => {
         {/* Footer Links */}
         <div className="text-center pt-2">
           <p className="text-base text-slate-700">
-            Don't have an account?{' '}
-            <Link to="/register" className="font-semibold text-primary hover:text-primary-light transition-colors">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="font-semibold text-primary hover:text-primary-light transition-colors"
+            >
               Create an account
             </Link>
           </p>
         </div>
 
         <div className="flex justify-center gap-8 pt-4">
-          <Link to="/privacy" className="text-[12px] text-[#757684] uppercase tracking-[0.6px] hover:text-slate-700 transition-colors">
+          <Link
+            to="/privacy"
+            className="text-[12px] text-[#757684] uppercase tracking-[0.6px] hover:text-slate-700 transition-colors"
+          >
             Privacy Policy
           </Link>
-          <Link to="/terms" className="text-[12px] text-[#757684] uppercase tracking-[0.6px] hover:text-slate-700 transition-colors">
+          <Link
+            to="/terms"
+            className="text-[12px] text-[#757684] uppercase tracking-[0.6px] hover:text-slate-700 transition-colors"
+          >
             Terms of Service
           </Link>
         </div>

@@ -10,10 +10,23 @@ import Register from "./pages/Register/Register";
 import Applications from "./pages/Applications/Applications";
 import Menu from "./components/layouts/Menu";
 import "./App.css";
+import type { ReactNode } from "react";
+import Header from "./components/Header";
+import Assistant from "./pages/Assistant/Assistant";
 
 const PrivateRoute = ({ children }: any) => {
   const { token } = useAuth();
   return token ? children : <Navigate to="/login" />;
+};
+
+const Layout = ({ children }: { children: ReactNode }) => {
+  return (
+    <>
+      <Header />
+      <main className="px-6 py-4 h-screen">{children}</main>
+      {/* <Menu /> */}
+    </>
+  );
 };
 
 function App() {
@@ -36,9 +49,19 @@ function App() {
             path="/applications"
             element={
               <PrivateRoute>
-                <Menu>
+                <Layout>
                   <Applications />
-                </Menu>
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/assistant"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <Assistant />
+                </Layout>
               </PrivateRoute>
             }
           />

@@ -1,21 +1,34 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext<any>(null);
 
-export const AuthProvider = ({ children }: any) => {
-  const [user, setUser] = useState<any>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  lastName: string;
+  isVerified: boolean;
+}
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<User | null>(
+    JSON.parse(localStorage.getItem("userData") || "{}"),
+  );
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token"),
+  );
 
   useEffect(() => {
-    if (token) {
-      localStorage.setItem('token', token);
-      // Here you could fetch user profile if needed
+    if (token && user) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("userData", JSON.stringify(user));
     } else {
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
+      localStorage.removeItem("userData");
     }
-  }, [token]);
+  }, [token, user]);
 
-  const login = (userData: any, userToken: string) => {
+  const login = (userData: User, userToken: string) => {
     setUser(userData);
     setToken(userToken);
   };

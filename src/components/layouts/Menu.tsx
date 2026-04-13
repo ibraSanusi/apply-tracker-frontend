@@ -1,5 +1,4 @@
 import { Bot, Home, Settings, StickyNote } from "lucide-react";
-import { type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Pages = {
@@ -9,18 +8,13 @@ const Pages = {
   settings: "settings",
 };
 
-interface Props {
-  children: ReactNode;
-}
-
-export default function Menu({ children }: Props) {
+export default function Menu() {
   const location = useLocation();
   const activePage = location.pathname.split("/")[1];
 
   return (
-    <main className="">
-      {children}
-      <ul className="absolute bottom-4 -translate-x-1/2 transform left-1/2 flex flex-row gap-4 justify-center">
+    <main className="absolute bottom-4 -translate-x-1/2 transform left-1/2">
+      <ul className="flex flex-row gap-4 justify-center">
         <Link
           to={`/${Pages.home}`}
           className={`space-y-1 flex flex-col items-center px-4 py-2 ${activePage === Pages.home ? "active-page" : ""}`}

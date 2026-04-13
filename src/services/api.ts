@@ -1,6 +1,16 @@
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-export async function api(endpoint: string, { body, token, method, ...options }: any = {}) {
+interface ApiOptions {
+  body?: any;
+  token?: string;
+  method?: string;
+  options?: any;
+}
+
+export async function api(
+  endpoint: string,
+  { body, token, method, ...options }: ApiOptions = {},
+) {
   const res = await fetch(`${API_URL}${endpoint}`, {
     method: method ?? (body ? "POST" : "GET"),
     headers: {
@@ -12,9 +22,11 @@ export async function api(endpoint: string, { body, token, method, ...options }:
   });
 
   if (!res.ok) {
-    const errorData = await res.json().catch(() => ({ message: "An unknown error occurred" }));
+    const errorData = await res
+      .json()
+      .catch(() => ({ message: "An unknown error occurred" }));
     throw errorData;
   }
-  
+
   return res.json();
 }
