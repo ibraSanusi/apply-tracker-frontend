@@ -1,4 +1,5 @@
 import { ChevronRight, Calendar, Building2, Briefcase, DollarSign, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 import type { Application } from "../services/applications.service";
 
 export default function ApplicationCard({ application }: { application: Application }) {
@@ -59,12 +60,12 @@ export default function ApplicationCard({ application }: { application: Applicat
                         </div>
                     </div>
 
-                    <a 
-                        href={`/application/${application.id}`}
+                    <Link 
+                        to={`/application/${application.id}`}
                         className="p-2 rounded-full bg-slate-50 text-slate-400 hover:bg-blue-50 hover:text-blue-600 transition-all"
                     >
                         <ChevronRight size={20} />
-                    </a>
+                    </Link>
                 </div>
             </div>
 

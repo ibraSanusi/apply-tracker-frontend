@@ -43,4 +43,26 @@ export const applicationsService = {
       method: "GET",
       token: localStorage.getItem("token") || undefined,
     }),
+
+  getById: (id: string | number): Promise<{ data: Application }> =>
+    api(`/applications/${id}`, {
+      method: "GET",
+      token: localStorage.getItem("token") || undefined,
+    }),
+
+  update: (
+    id: string | number,
+    data: Partial<SaveApplicationRequest>,
+  ): Promise<SaveApplicationResponse> =>
+    api(`/applications/${id}`, {
+      method: "PUT",
+      body: data,
+      token: localStorage.getItem("token") || undefined,
+    }),
+
+  delete: (id: string | number): Promise<void> =>
+    api(`/applications/${id}`, {
+      method: "DELETE",
+      token: localStorage.getItem("token") || undefined,
+    }),
 };

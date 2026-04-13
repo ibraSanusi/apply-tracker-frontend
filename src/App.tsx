@@ -12,6 +12,7 @@ import "./App.css";
 import type { ReactNode } from "react";
 import Header from "./components/Header";
 import Assistant from "./pages/Assistant/Assistant";
+import ApplicationDetail from "./pages/ApplicationDetail/ApplicationDetail";
 
 const PrivateRoute = ({ children }: any) => {
   const { token } = useAuth();
@@ -49,6 +50,16 @@ function App() {
               <PrivateRoute>
                 <Layout>
                   <Applications />
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/application/:id"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <ApplicationDetail />
                 </Layout>
               </PrivateRoute>
             }
