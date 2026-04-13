@@ -8,7 +8,6 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Applications from "./pages/Applications/Applications";
-import Menu from "./components/layouts/Menu";
 import "./App.css";
 import type { ReactNode } from "react";
 import Header from "./components/Header";
@@ -23,8 +22,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Header />
-      <main className="px-6 py-4 h-screen">{children}</main>
-      {/* <Menu /> */}
+      <main className="px-6 py-4 h-screen pt-20">{children}</main>
     </>
   );
 };
