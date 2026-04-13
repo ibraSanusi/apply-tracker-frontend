@@ -1,6 +1,6 @@
 import { ChevronRight, Calendar, Building2, Briefcase, DollarSign, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
-import type { Application } from "../services/applications.service";
+import type { Application } from "../types/application.types";
 
 export default function ApplicationCard({ application }: { application: Application }) {
     const appliedAt = new Date(application.createdAt);

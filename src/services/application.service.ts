@@ -1,36 +1,12 @@
 import { api } from "./api";
+import type { 
+  SaveApplicationRequest, 
+  SaveApplicationResponse, 
+  GetApplicationsResponse, 
+  Application 
+} from "../types/application.types";
 
-export interface Application {
-  id: number;
-  company: string;
-  position: string;
-  createdAt: string;
-  email?: string;
-  salary?: number;
-  medium?: string;
-  cvUrl?: string;
-  coverUrl?: string;
-}
-
-export interface SaveApplicationRequest {
-  company: string;
-  position: string;
-  email?: string;
-  salary?: number;
-  medium?: string;
-  cv: string;
-  cover: string;
-}
-
-export interface SaveApplicationResponse {
-  data: Application;
-}
-
-export interface GetApplicationsResponse {
-  data: Application[];
-}
-
-export const applicationsService = {
+export const applicationService = {
   save: (data: SaveApplicationRequest): Promise<SaveApplicationResponse> =>
     api("/applications/save", {
       body: data,

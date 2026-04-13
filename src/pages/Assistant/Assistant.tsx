@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Send, User, Bot, Loader2 } from "lucide-react";
 import { assistantService } from "../../services/assistant.service";
-import { applicationsService } from "../../services/applications.service";
+import { applicationService } from "../../services/application.service";
 import { cvTemplate } from "../../lib/constants";
 import { useAuth } from "../../context/AuthContext";
 import SaveToast from "../../components/Assistant/SaveToast";
@@ -127,7 +127,7 @@ export default function Assistant() {
         if (isNaN(payload.salary)) delete payload.salary;
       }
 
-      await applicationsService.save(payload);
+      await applicationService.save(payload);
       setShowSaveToast(false);
       setHasPendingSave(false);
     } catch (error) {

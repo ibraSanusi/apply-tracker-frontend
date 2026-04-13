@@ -17,7 +17,8 @@ import {
   AlertCircle,
   CheckCircle2
 } from "lucide-react";
-import { applicationsService, type Application } from "../../services/applications.service";
+import { applicationService } from "../../services/application.service";
+import type { Application } from "../../types/application.types";
 import ConfirmModal from "../../components/ConfirmModal";
 
 const MEDIUM_OPTIONS = [
@@ -50,7 +51,7 @@ export default function ApplicationDetail() {
       if (!id) return;
       try {
         setLoading(true);
-        const response = await applicationsService.getById(id);
+        const response = await applicationService.getById(id);
         setApplication(response.data);
         setFormData(response.data);
         setError(null);
@@ -71,7 +72,7 @@ export default function ApplicationDetail() {
     
     try {
       setUpdateLoading(true);
-      const response = await applicationsService.update(id, {
+      const response = await applicationService.update(id, {
         company: formData.company,
         position: formData.position,
         email: formData.email,
@@ -95,7 +96,7 @@ export default function ApplicationDetail() {
     if (!id) return;
     try {
       setDeleteLoading(true);
-      await applicationsService.delete(id);
+      await applicationService.delete(id);
       navigate("/applications");
     } catch (err) {
       console.error("Error deleting application:", err);

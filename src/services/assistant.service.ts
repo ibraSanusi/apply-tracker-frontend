@@ -1,9 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-interface ChatRequest {
-  jobDescription: string;
-  cvTemplate: string;
-}
+import type { ChatRequest } from "../types/assistant.types";
 
 export const assistantService = {
   chat: ({ jobDescription, cvTemplate }: ChatRequest): Promise<any> =>

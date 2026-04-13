@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import SearchInput from "../../components/SearchInput.tsx";
 import ApplicationCard from "../../components/ApplicationCard.tsx";
-import { applicationsService } from "../../services/applications.service";
-import type { Application } from "../../services/applications.service";
+import { applicationService } from "../../services/application.service";
+import type { Application } from "../../types/application.types";
 import { Loader2, AlertCircle, Plus } from "lucide-react";
 
 export default function Applications() {
@@ -15,7 +15,7 @@ export default function Applications() {
     const fetchApplications = async () => {
       try {
         setLoading(true);
-        const response = await applicationsService.getAll();
+        const response = await applicationService.getAll();
         setApplications(response.data);
         setError(null);
       } catch (err) {
