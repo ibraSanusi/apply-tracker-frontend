@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { 
-  ChevronLeft, 
-  Edit3, 
-  Trash2, 
-  Building2, 
-  Briefcase, 
-  DollarSign, 
-  Calendar, 
-  Mail, 
-  FileText, 
+import {
+  ChevronLeft,
+  Edit3,
+  Trash2,
+  Building2,
+  Briefcase,
+  DollarSign,
+  Calendar,
+  Mail,
+  FileText,
   ExternalLink,
   Clock,
   Save,
@@ -33,16 +33,16 @@ const MEDIUM_OPTIONS = [
 export default function ApplicationDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
+
   const [application, setApplication] = useState<Application | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [isEditing, setIsEditing] = useState(false);
   const [updateLoading, setUpdateLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  
+
   // Form state
   const [formData, setFormData] = useState<Partial<Application>>({});
 
@@ -69,7 +69,7 @@ export default function ApplicationDetail() {
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!id || !formData) return;
-    
+
     try {
       setUpdateLoading(true);
       const response = await applicationService.update(id, {
@@ -141,7 +141,7 @@ export default function ApplicationDetail() {
     <div className="max-w-4xl mx-auto pb-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Navigation & Actions */}
       <header className="flex items-center justify-between mb-8">
-        <button 
+        <button
           onClick={() => navigate("/applications")}
           className="flex items-center gap-2 text-slate-500 hover:text-slate-900 font-semibold transition-colors group"
         >
@@ -154,14 +154,14 @@ export default function ApplicationDetail() {
         <div className="flex items-center gap-3">
           {!isEditing ? (
             <>
-              <button 
+              <button
                 onClick={() => setIsEditing(true)}
                 className="flex items-center gap-2 bg-white border border-slate-200 hover:border-blue-200 hover:bg-blue-50 text-slate-700 hover:text-blue-600 px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm"
               >
                 <Edit3 size={18} />
                 Edit
               </button>
-              <button 
+              <button
                 onClick={() => setShowDeleteModal(true)}
                 className="flex items-center gap-2 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 text-slate-700 hover:text-red-600 px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm"
               >
@@ -171,7 +171,7 @@ export default function ApplicationDetail() {
             </>
           ) : (
             <>
-              <button 
+              <button
                 onClick={() => {
                   setIsEditing(false);
                   setFormData(application);
@@ -180,7 +180,7 @@ export default function ApplicationDetail() {
               >
                 Cancel
               </button>
-              <button 
+              <button
                 onClick={handleUpdate}
                 disabled={updateLoading}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-200 transition-all active:scale-95 disabled:opacity-50"
@@ -200,20 +200,20 @@ export default function ApplicationDetail() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Position</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={formData.position || ""}
-                  onChange={(e) => setFormData({...formData, position: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-lg font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
                   placeholder="Software Engineer"
                 />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Company</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={formData.company || ""}
-                  onChange={(e) => setFormData({...formData, company: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-lg font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
                   placeholder="Google"
                 />
@@ -250,7 +250,7 @@ export default function ApplicationDetail() {
         {/* Info Card */}
         <section className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-8">
           <h3 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-4">Application Details</h3>
-          
+
           <div className="grid grid-cols-1 gap-6">
             {isEditing ? (
               <>
@@ -258,10 +258,10 @@ export default function ApplicationDetail() {
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1 flex items-center gap-2">
                     <DollarSign size={14} /> Salary (Annual)
                   </label>
-                  <input 
-                    type="number" 
+                  <input
+                    type="number"
                     value={formData.salary || ""}
-                    onChange={(e) => setFormData({...formData, salary: parseInt(e.target.value) || 0})}
+                    onChange={(e) => setFormData({ ...formData, salary: parseInt(e.target.value) || 0 })}
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                   />
                 </div>
@@ -269,9 +269,9 @@ export default function ApplicationDetail() {
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1 flex items-center gap-2">
                     <Briefcase size={14} /> Application Medium
                   </label>
-                  <select 
+                  <select
                     value={formData.medium || ""}
-                    onChange={(e) => setFormData({...formData, medium: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, medium: e.target.value })}
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none"
                   >
                     <option value="">Select an option</option>
@@ -284,10 +284,10 @@ export default function ApplicationDetail() {
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1 flex items-center gap-2">
                     <Mail size={14} /> Contact Email
                   </label>
-                  <input 
-                    type="email" 
+                  <input
+                    type="email"
                     value={formData.email || ""}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                     placeholder="HR@company.com"
                   />
@@ -295,28 +295,28 @@ export default function ApplicationDetail() {
               </>
             ) : (
               <>
-                <DetailItem 
-                  icon={<DollarSign size={20} className="text-emerald-500" />} 
-                  label="Salary Range" 
-                  value={application.salary ? `$ ${application.salary.toLocaleString()}` : "Not specified"} 
+                <DetailItem
+                  icon={<DollarSign size={20} className="text-emerald-500" />}
+                  label="Salary Range"
+                  value={application.salary ? `$ ${application.salary.toLocaleString()}` : "Not specified"}
                   color="bg-emerald-50"
                 />
-                <DetailItem 
-                  icon={<Briefcase size={20} className="text-blue-500" />} 
-                  label="Applied via" 
-                  value={application.medium || "Not specified"} 
+                <DetailItem
+                  icon={<Briefcase size={20} className="text-blue-500" />}
+                  label="Applied via"
+                  value={application.medium || "Not specified"}
                   color="bg-blue-50"
                 />
-                <DetailItem 
-                  icon={<Mail size={20} className="text-purple-500" />} 
-                  label="Contact" 
-                  value={application.email || "No email provided"} 
+                <DetailItem
+                  icon={<Mail size={20} className="text-purple-500" />}
+                  label="Contact"
+                  value={application.email || "No email provided"}
                   color="bg-purple-50"
                 />
-                <DetailItem 
-                  icon={<Calendar size={20} className="text-orange-500" />} 
-                  label="Applied On" 
-                  value={appliedDate.toLocaleDateString(undefined, { dateStyle: 'long' })} 
+                <DetailItem
+                  icon={<Calendar size={20} className="text-orange-500" />}
+                  label="Applied On"
+                  value={appliedDate.toLocaleDateString(undefined, { dateStyle: 'long' })}
                   color="bg-orange-50"
                 />
               </>
@@ -331,11 +331,11 @@ export default function ApplicationDetail() {
             <div className="absolute top-0 right-0 p-8 opacity-10">
               <Clock size={80} />
             </div>
-            
+
             <h3 className="text-lg font-bold mb-6 text-slate-300 border-b border-white/10 pb-4 flex items-center gap-2">
               <Clock size={18} /> Timeline Status
             </h3>
-            
+
             <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <div className={`p-3 rounded-2xl ${isFollowUpDue ? 'bg-red-500' : 'bg-slate-800'} transition-colors`}>
@@ -373,7 +373,7 @@ export default function ApplicationDetail() {
         </section>
       </div>
 
-      <ConfirmModal 
+      <ConfirmModal
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onConfirm={handleDelete}
@@ -409,9 +409,9 @@ function AssetButton({ label, url }: { label: string, url?: string }) {
   );
 
   return (
-    <a 
-      href={url} 
-      target="_blank" 
+    <a
+      href={url}
+      target="_blank"
       rel="noopener noreferrer"
       className="flex items-center justify-between p-4 bg-slate-50 hover:bg-blue-50 border border-slate-100 hover:border-blue-100 rounded-2xl transition-all group"
     >
