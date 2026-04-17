@@ -3,6 +3,7 @@ export interface User {
   name: string;
   email: string;
   lastName?: string;
+  isVerified: boolean;
 }
 
 export interface LoginRequest {
@@ -26,3 +27,10 @@ export interface VerifyEmailRequest {
   token: string;
   userId: string;
 }
+
+export interface RecoverPasswordRequest {
+  token: string;
+  newPassword: string;
+  email: string;
+}
+

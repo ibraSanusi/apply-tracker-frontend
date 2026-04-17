@@ -13,6 +13,8 @@ import type { ReactNode } from "react";
 import Header from "./components/Header";
 import Assistant from "./pages/Assistant/Assistant";
 import ApplicationDetail from "./pages/ApplicationDetail/ApplicationDetail";
+import RecoveryPassword from "./pages/RecoveryPassword/RecoveryPassword";
+
 
 const PrivateRoute = ({ children }: any) => {
   const { token } = useAuth();
@@ -44,6 +46,13 @@ function App() {
               </div>
             }
           />
+          <Route
+            path="/recovery-password"
+            element={
+              <RecoveryPassword />
+            }
+          />
+
           <Route
             path="/applications"
             element={

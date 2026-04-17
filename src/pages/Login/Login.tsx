@@ -36,12 +36,23 @@ const Login = () => {
     }
   };
 
+  const sendRecoveryEmail = async (email: string) => {
+    try {
+      await authService.sendRecoveryEmail(email);
+      setError("Recovery password email sent successfully");
+    } catch (err: any) {
+      setError(err.message || "Error occurred during sign in");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#F2F4F7] flex items-center justify-center p-4 font-inter">
       <div className="w-full max-w-[448px] space-y-8">
         {/* Header Section */}
         <div className="space-y-2">
-          <h2 className="text-[30px] font-extrabold text-[#191C1E] leading-[36px] font-manrope">
+          <h2 className="text-[30px] font-extrabold text-slate-800 leading-[36px] font-manrope">
             Welcome Back
           </h2>
           <p className="text-base text-slate-700">
@@ -71,11 +82,11 @@ const Login = () => {
 
         {/* Divider */}
         <div className="flex items-center gap-4">
-          <div className="h-[1px] flex-1 bg-[#E6E8EA]"></div>
+          <div className="h-px flex-1 bg-[#E6E8EA]"></div>
           <span className="text-[12px] font-normal text-[#757684] uppercase tracking-[1.2px]">
             Or with Email
           </span>
-          <div className="h-[1px] flex-1 bg-[#E6E8EA]"></div>
+          <div className="h-px flex-1 bg-[#E6E8EA]"></div>
         </div>
 
         {/* Error Message */}
@@ -111,13 +122,13 @@ const Login = () => {
               <label className="text-sm font-medium text-slate-700">
                 Password
               </label>
-              <Link
-                to="/recover-password"
+              <button
+                onClick={() => sendRecoveryEmail(email)}
                 title="Forgot password?"
                 className="text-sm font-semibold text-primary hover:text-primary-light transition-colors"
               >
                 Forgot password?
-              </Link>
+              </button>
             </div>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -160,7 +171,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-4 bg-gradient-to-r from-primary to-[#4B4FB0] text-white font-bold rounded-lg shadow-button hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:active:scale-100"
+            className="w-full py-4 bg-linear-to-r from-primary to-secondary text-white font-bold rounded-lg shadow-button hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:active:scale-100"
           >
             {isLoading ? (
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
