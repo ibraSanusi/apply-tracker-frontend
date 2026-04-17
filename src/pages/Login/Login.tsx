@@ -123,6 +123,7 @@ const Login = () => {
                 Password
               </label>
               <button
+                type="button"
                 onClick={() => sendRecoveryEmail(email)}
                 title="Forgot password?"
                 className="text-sm font-semibold text-primary hover:text-primary-light transition-colors"
