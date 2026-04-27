@@ -1,6 +1,6 @@
 export const cvTemplate = `
 Ibrahim Ayodeji Sanusi
-Desarrollador Full Stack Junior
+Desarrollador Full Stack
 Madrid, España
 ✉  ibra.sanusi.ayo@gmail.com
 github.com/ibraSanusi
@@ -8,26 +8,26 @@ linkedin.com/in/ibrahim-ayodeji-sanusi
 
 PERFIL PROFESIONAL
 
-Desarrollador Full Stack con casi 3 años de experiencia práctica acumulada entre formación, proyectos autodidactas y trabajo profesional. Acostumbrado a entregar producto real en entornos ágiles, desde MVPs hasta aplicaciones con IA integrada. Dominio nativo del inglés y español.
+Desarrollador Full Stack con casi 3 años de experiencia práctica, con énfasis en desarrollo backend usando Node.js, Express y TypeScript. Experiencia construyendo APIs RESTful robustas, integraciones con sistemas externos, automatización de procesos y despliegue con Docker en entornos de producción. Sólida base en frontend con React para entregar producto completo en equipos ágiles. Dominio nativo del inglés y español.
 
 EXPERIENCIA PROFESIONAL
 
 Desarrollador Full Stack Junior   ·   Fullcircle S.L.
 Jun 2025 – Actualidad   •   Madrid, España
-- Desarrollo de funcionalidades completas en proyectos MVP usando React, TypeScript, Node.js y Express.
-- Integración técnica del sistema interno con plataforma de facturación electrónica (VeriFACTU), cumpliendo normativa fiscal española.
-- Creación e integración de CRUDs RESTful, consumidos desde frontend y terceros.
-- Implementación de tests unitarios y E2E, asegurando calidad en cada entrega.
-- Extensión del backoffice: nuevos filtros, mejoras de UI y optimización de flujos de gestión.
+- Diseño e implementación de APIs RESTful con Node.js y Express, consumidas desde frontend y servicios externos.
+- Integración técnica con plataforma de facturación electrónica (VeriFACTU), cumpliendo normativa fiscal española.
+- Dockerización de entornos de desarrollo y despliegue para pipelines de CI/CD reproducibles.
 - Desarrollo de scripts de automatización y cron jobs para tareas recurrentes del sistema.
-- Uso de Docker para entornos de desarrollo y despliegue reproducibles.
+- Implementación de tests unitarios y E2E con Jest/Vitest, garantizando calidad en cada entrega.
+- Desarrollo de funcionalidades completas en proyectos MVP con React y TypeScript.
+- Extensión del backoffice: nuevos filtros, mejoras de UI y optimización de flujos de gestión.
 
-Desarrollador Frontend (Prácticas)   ·   Recommiend App
-3 meses  ·  Prácticas curriculares   •   Madrid, España
-- Desarrollo completo del frontend de una app de análisis de fotografías con IA.
+Desarrollador Full Stack   ·   Recommiend App
+Abr 2024 – May 2025   •   Madrid, España
+- Desarrollo completo del frontend de una aplicación de análisis de fotografías con IA.
 - Migración del backoffice interno de Redux a Next.js, mejorando rendimiento y mantenibilidad.
-- Stack: React.js, Next.js, Tailwind CSS.
-- Trabajo en equipo con metodologías ágiles (sprints, daily standups) y Git.
+- Implementación de interfaces con React.js, Next.js y Tailwind CSS.
+- Trabajo en equipo con metodologías ágiles: sprints, daily standups y gestión con Git.
 
 FORMACIÓN
 
@@ -37,10 +37,10 @@ CFGM Sistemas Microinformáticos y Redes (SMR)   ·   Madrid
 
 HABILIDADES TÉCNICAS
 
-Frontend:       JavaScript, TypeScript, React.js, Next.js, Tailwind CSS
-Backend:        Node.js, Express, REST APIs, Docker, Cron Jobs
-Testing:        Jest/Vitest, Unit Testing, E2E Testing, Git
-Integraciones:  VeriFACTU, WordPress, SEO Técnico, APIs externas
+Backend:        Node.js, Express, REST APIs, Docker, Cron Jobs, TypeScript
+Frontend:       React.js, Next.js, JavaScript, Tailwind CSS, HTML5, CSS3
+Testing:        Jest/Vitest, Unit Testing, E2E Testing
+Herramientas:   Git, GitHub, Scrum, Kanban, APIs externas, VeriFACTU
 
 IDIOMAS
 
