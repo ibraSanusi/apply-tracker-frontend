@@ -8,6 +8,7 @@ export interface Application {
   medium?: string;
   cvUrl?: string;
   coverUrl?: string;
+  cvPdfUrl?: string;
 }
 
 export interface SaveApplicationRequest {

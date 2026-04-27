@@ -15,11 +15,13 @@ import {
   Save,
   Loader2,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  Eye
 } from "lucide-react";
 import { applicationService } from "../../services/application.service";
 import type { Application } from "../../types/application.types";
 import ConfirmModal from "../../components/ConfirmModal";
+import PreviewModal from "../../components/PreviewModal";
 
 const MEDIUM_OPTIONS = [
   "LinkedIn",
@@ -42,13 +44,19 @@ export default function ApplicationDetail() {
   const [updateLoading, setUpdateLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
 
   // Form state
   const [formData, setFormData] = useState<Partial<Application>>({});
 
   useEffect(() => {
     const fetchApplication = async () => {
-      if (!id) return;
+      if (!id) {
+        console.log('No id: ', id)
+        return
+      };
       try {
         setLoading(true);
         const response = await applicationService.getById(id);
@@ -366,7 +374,16 @@ export default function ApplicationDetail() {
               <FileText size={20} className="text-slate-400" /> Documents
             </h3>
             <div className="space-y-3">
-              <AssetButton label="CV / Resume" url={application.cvUrl} />
+              <AssetButton
+                label="CV / Resume"
+                url={application.cvUrl}
+                previewUrl={application.cvPdfUrl}
+                onPreview={() => {
+                  setPreviewUrl(application.cvPdfUrl || "");
+                  setPreviewTitle(`${application.position} - CV`);
+                  setIsPreviewOpen(true);
+                }}
+              />
               <AssetButton label="Cover Letter" url={application.coverUrl} />
             </div>
           </div>
@@ -381,6 +398,13 @@ export default function ApplicationDetail() {
         title="Delete Application"
         message={`Are you sure you want to delete your application for ${application.position} at ${application.company}? This action cannot be undone.`}
         confirmText="Yes, delete it"
+      />
+
+      <PreviewModal
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)}
+        url={previewUrl}
+        title={previewTitle}
       />
     </div>
   );
@@ -400,7 +424,7 @@ function DetailItem({ icon, label, value, color }: { icon: any, label: string, v
   );
 }
 
-function AssetButton({ label, url }: { label: string, url?: string }) {
+function AssetButton({ label, url, previewUrl, onPreview }: { label: string, url?: string, previewUrl?: string, onPreview?: () => void }) {
   if (!url) return (
     <div className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl text-slate-400 border border-slate-100">
       <span className="font-bold text-sm">{label}</span>
@@ -409,14 +433,29 @@ function AssetButton({ label, url }: { label: string, url?: string }) {
   );
 
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center justify-between p-4 bg-slate-50 hover:bg-blue-50 border border-slate-100 hover:border-blue-100 rounded-2xl transition-all group"
-    >
-      <span className="font-bold text-sm text-slate-700 group-hover:text-blue-600">{label}</span>
-      <ExternalLink size={16} className="text-slate-400 group-hover:text-blue-500" />
-    </a>
+    <div className="flex items-center gap-2">
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex-1 flex items-center justify-between p-4 bg-slate-50 hover:bg-blue-50 border border-slate-100 hover:border-blue-100 rounded-2xl transition-all group"
+      >
+        <span className="font-bold text-sm text-slate-700 group-hover:text-blue-600">{label}</span>
+        <ExternalLink size={16} className="text-slate-400 group-hover:text-blue-500" />
+      </a>
+
+      {previewUrl && (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            onPreview?.();
+          }}
+          className="p-4 bg-slate-50 hover:bg-blue-600 text-slate-400 hover:text-white border border-slate-100 hover:border-blue-600 rounded-2xl transition-all flex items-center justify-center shrink-0"
+          title="Preview PDF"
+        >
+          <Eye size={18} />
+        </button>
+      )}
+    </div>
   );
 }
