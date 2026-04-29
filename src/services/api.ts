@@ -14,7 +14,7 @@ export async function api(
   const res = await fetch(`${API_URL}${endpoint}`, {
     method: method ?? (body ? "POST" : "GET"),
     headers: {
-      "Content-Type": "application/json",
+      ...(body && { "Content-Type": "application/json" }),
       ...(token && { Authorization: `Bearer ${token}` }),
     },
     ...(body && { body: JSON.stringify(body) }),
