@@ -8,7 +8,7 @@ linkedin.com/in/ibrahim-ayodeji-sanusi
 
 PERFIL PROFESIONAL
 
-Desarrollador Full Stack con casi 3 años de experiencia práctica, con énfasis en desarrollo backend usando Node.js, Express y TypeScript. Experiencia construyendo APIs RESTful robustas, integraciones con sistemas externos, automatización de procesos y despliegue con Docker en entornos de producción. Sólida base en frontend con React para entregar producto completo en equipos ágiles. Dominio nativo del inglés y español.
+Desarrollador Full Stack con más de 2 años de experiencia práctica, con énfasis en desarrollo backend usando Node.js, Express y TypeScript. Experiencia construyendo APIs RESTful robustas, integraciones con sistemas externos, automatización de procesos y despliegue con Docker en entornos de producción. Sólida base en frontend con React para entregar producto completo en equipos ágiles. Dominio nativo del inglés y español.
 
 EXPERIENCIA PROFESIONAL
 
