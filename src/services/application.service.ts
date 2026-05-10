@@ -1,9 +1,9 @@
 import { api } from "./api";
-import type { 
-  SaveApplicationRequest, 
-  SaveApplicationResponse, 
-  GetApplicationsResponse, 
-  Application 
+import type {
+  SaveApplicationRequest,
+  SaveApplicationResponse,
+  GetApplicationsResponse,
+  Application
 } from "../types/application.types";
 
 export const applicationService = {
@@ -40,5 +40,12 @@ export const applicationService = {
     api(`/applications/${id}`, {
       method: "DELETE",
       token: localStorage.getItem("token") || undefined,
+    }),
+
+  followUp: (id: string | number, message?: string): Promise<SaveApplicationResponse> =>
+    api(`/applications/${id}/follow-up`, {
+      method: "POST",
+      token: localStorage.getItem("token") || undefined,
+      body: { message },
     }),
 };

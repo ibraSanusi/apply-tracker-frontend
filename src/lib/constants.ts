@@ -1,57 +1,56 @@
 export const cvTemplate = `
 Ibrahim Ayodeji Sanusi
-Desarrollador Full Stack
-Madrid, España
-✉  ibra.sanusi.ayo@gmail.com
-github.com/ibraSanusi
-linkedin.com/in/ibrahim-ayodeji-sanusi
+Full Stack Developer | Node.js, TypeScript & React Specialist
+Madrid, España | ibra.sanusi.ayo@gmail.com
+github.com/ibraSanusi | linkedin.com/in/ibrahim-ayodeji-sanusi
 
 PERFIL PROFESIONAL
-
-Desarrollador Full Stack con más de 2 años de experiencia práctica, con énfasis en desarrollo backend usando Node.js, Express y TypeScript. Experiencia construyendo APIs RESTful robustas, integraciones con sistemas externos, automatización de procesos y despliegue con Docker en entornos de producción. Sólida base en frontend con React para entregar producto completo en equipos ágiles. Dominio nativo del inglés y español.
+Ingeniero de software Full Stack con enfoque en rendimiento y escalabilidad de sistemas distribuidos. Experto en ecosistema JavaScript/TypeScript (Node.js, React) y optimización de bases de datos SQL. Especializado en arquitectura de microservicios, integración de sistemas críticos como VeriFACTU y automatización de procesos asíncronos. Habla nativa de inglés y español.
 
 EXPERIENCIA PROFESIONAL
 
-Desarrollador Full Stack Junior   ·   Fullcircle S.L.
-Jun 2025 – Actualidad   •   Madrid, España
-- Diseño e implementación de APIs RESTful con Node.js y Express, consumidas desde frontend y servicios externos.
-- Integración técnica con plataforma de facturación electrónica (VeriFACTU), cumpliendo normativa fiscal española.
-- Dockerización de entornos de desarrollo y despliegue para pipelines de CI/CD reproducibles.
-- Desarrollo de scripts de automatización y cron jobs para tareas recurrentes del sistema.
-- Implementación de tests unitarios y E2E con Jest/Vitest, garantizando calidad en cada entrega.
-- Desarrollo de funcionalidades completas en proyectos MVP con React y TypeScript.
-- Extensión del backoffice: nuevos filtros, mejoras de UI y optimización de flujos de gestión.
+Full Stack Developer Junior · Fullcircle S.L.
+Jun 2025 – Actualidad • Madrid, España
 
-Desarrollador Full Stack   ·   Recommiend App
-Abr 2024 – May 2025   •   Madrid, España
-- Desarrollo completo del frontend de una aplicación de análisis de fotografías con IA.
-- Migración del backoffice interno de Redux a Next.js, mejorando rendimiento y mantenibilidad.
-- Implementación de interfaces con React.js, Next.js y Tailwind CSS.
-- Trabajo en equipo con metodologías ágiles: sprints, daily standups y gestión con Git.
+Optimización de arquitectura de pagos: Implementé procesamiento asíncrono mediante colas (Queues) y concurrencia con Promise.all, reduciendo el tiempo de bloqueo del servidor en 2 segundos por transacción y mejorando el rendimiento global del sistema en un 35%.
+
+Integración VeriFACTU: Lideré el módulo de facturación electrónica procesando un volumen de +300 facturas diarias bajo normativa fiscal española.
+
+Automatización de infraestructura: Diseñé e implementé Cron Jobs estratégicos para la ejecución de tareas pesadas en horas de baja demanda, garantizando alta disponibilidad de la plataforma.
+
+Calidad de software: Incrementé la cobertura de tests al 80% mediante Jest y Vitest, integrando entornos Dockerizados en pipelines de CI/CD para despliegues zero-error.
+
+Frontend Performance: Optimización de SPAs en React mediante gestión eficiente de estados globales y contextos, reduciendo renders innecesarios.
+
+Full Stack Developer · Recommiend App
+Abr 2024 – May 2025 • Madrid, España
+
+Migración Arquitectural: Lideré la transición del backoffice de Redux a Next.js, logrando una mejora sustancial en la mantenibilidad del código y la velocidad de carga (LCP).
+
+IA Integration: Desarrollé la interfaz frontend para una herramienta de análisis fotográfico basada en IA, priorizando la experiencia de usuario y el diseño responsive con Tailwind CSS.
+
+Metodologías: Gestión activa de ciclo de vida del software bajo Scrum y control de versiones avanzado con Git.
 
 FORMACIÓN
 
-CFGS Desarrollo de Aplicaciones Web (DAW)   ·   Madrid
-CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)   ·   Madrid
-CFGM Sistemas Microinformáticos y Redes (SMR)   ·   Madrid
+CFGS Desarrollo de Aplicaciones Web (DAW)
+
+CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)
 
 HABILIDADES TÉCNICAS
 
-Backend:        Node.js, Express, REST APIs, Docker, Cron Jobs, TypeScript
-Frontend:       React.js, Next.js, JavaScript, Tailwind CSS, HTML5, CSS3
-Testing:        Jest/Vitest, Unit Testing, E2E Testing
-Herramientas:   Git, GitHub, Scrum, Kanban, APIs externas, VeriFACTU
+Backend: Node.js (Experto), TypeScript, Express, REST APIs, SQL (PostgreSQL/MySQL), ORMs (Prisma/TypeORM), Arquitectura de Colas, Cron Jobs.
+
+Frontend: React.js, Next.js, Tailwind CSS, Context API.
+
+DevOps/Tools: Docker, CI/CD, Git, Jest, Vitest, VeriFACTU.
 
 IDIOMAS
 
-Español — Nativo
-Inglés — Nativo
+Inglés: Nativo (C2)
 
-OTROS
-
-GitHub activo: github.com/ibraSanusi
-~3 años de experiencia práctica incluyendo formación y proyectos autodidactas.
-`;
+Español: Nativo (C2)
+`
 
 export const jobDescriptionExaple = `
 Acerca del empleo

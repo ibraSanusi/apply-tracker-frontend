@@ -16,12 +16,15 @@ import {
   Loader2,
   AlertCircle,
   CheckCircle2,
-  Eye
+  Eye,
+  MessageSquare
 } from "lucide-react";
 import { applicationService } from "../../services/application.service";
 import type { Application } from "../../types/application.types";
 import ConfirmModal from "../../components/ConfirmModal";
 import PreviewModal from "../../components/PreviewModal";
+import FollowUpModal from "../../components/FollowUpModal";
+import { useAuth } from "../../context/AuthContext";
 
 const MEDIUM_OPTIONS = [
   "LinkedIn",
@@ -35,6 +38,7 @@ const MEDIUM_OPTIONS = [
 export default function ApplicationDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [application, setApplication] = useState<Application | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,10 +47,12 @@ export default function ApplicationDetail() {
   const [isEditing, setIsEditing] = useState(false);
   const [updateLoading, setUpdateLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [followUpLoading, setFollowUpLoading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [previewUrl, setPreviewUrl] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
+  const [isFollowingUp, setIsFollowingUp] = useState(false);
 
   // Form state
   const [formData, setFormData] = useState<Partial<Application>>({});
@@ -145,6 +151,20 @@ export default function ApplicationDetail() {
   const diffDays = Math.floor((new Date().getTime() - appliedDate.getTime()) / (1000 * 60 * 60 * 24));
   const isFollowUpDue = diffDays > 0 && diffDays % 7 === 0;
 
+  const handleFollowUp = async (message: string) => {
+    try {
+      setFollowUpLoading(true);
+      await applicationService.followUp(id, message);
+      setIsFollowingUp(false);
+    } catch (err) {
+      console.error("Error following up on application:", err);
+      setError("Failed to follow up on application.");
+      setIsFollowingUp(false);
+    } finally {
+      setFollowUpLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto pb-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Navigation & Actions */}
@@ -162,6 +182,13 @@ export default function ApplicationDetail() {
         <div className="flex items-center gap-3">
           {!isEditing ? (
             <>
+              <button
+                onClick={() => setIsFollowingUp(true)}
+                className="flex items-center gap-2 bg-white border border-slate-200 hover:border-blue-200 hover:bg-blue-50 text-slate-700 hover:text-blue-600 px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm"
+              >
+                <MessageSquare size={18} />
+                Follow-up
+              </button>
               <button
                 onClick={() => setIsEditing(true)}
                 className="flex items-center gap-2 bg-white border border-slate-200 hover:border-blue-200 hover:bg-blue-50 text-slate-700 hover:text-blue-600 px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm"
@@ -405,6 +432,17 @@ export default function ApplicationDetail() {
         onClose={() => setIsPreviewOpen(false)}
         url={previewUrl}
         title={previewTitle}
+      />
+
+      <FollowUpModal
+        isOpen={isFollowingUp}
+        onClose={() => setIsFollowingUp(false)}
+        onConfirm={handleFollowUp}
+        isLoading={followUpLoading}
+        title="Follow-up Application"
+        confirmText="Yes, follow up"
+        app={{ ...application, username: user?.name! }}
+        week={diffDays}
       />
     </div>
   );
