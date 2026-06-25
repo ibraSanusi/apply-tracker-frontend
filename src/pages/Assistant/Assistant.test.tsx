@@ -2,7 +2,10 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import Assistant from "./Assistant";
 import { assistantService } from "../../services/assistant.service";
+import { applicationService } from "../../services/application.service";
 import { useAuth } from "../../context/AuthContext";
+
+const mockNavigate = vi.fn();
 
 // Mock the service and context
 vi.mock("../../services/assistant.service", () => ({
@@ -11,13 +14,24 @@ vi.mock("../../services/assistant.service", () => ({
   },
 }));
 
+vi.mock("../../services/application.service", () => ({
+  applicationService: {
+    save: vi.fn(),
+  },
+}));
+
 vi.mock("../../context/AuthContext", () => ({
   useAuth: vi.fn(),
+}));
+
+vi.mock("react-router-dom", () => ({
+  useNavigate: () => mockNavigate,
 }));
 
 describe("Assistant Component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockNavigate.mockClear();
     (useAuth as any).mockReturnValue({
       user: { name: "Ibra" },
     });
@@ -96,5 +110,55 @@ describe("Assistant Component", () => {
     fireEvent.keyDown(textarea, { key: "Enter", code: "Enter", shiftKey: true });
 
     expect(assistantService.chat).not.toHaveBeenCalled();
+  });
+
+  it("shows success toast and navigates when application is saved", async () => {
+    const mockStream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(
+          new TextEncoder().encode(
+            JSON.stringify({
+              company: "Google",
+              position: "Software Engineer",
+              cv: {},
+              cover: "Hello"
+            })
+          )
+        );
+        controller.close();
+      },
+    });
+
+    (assistantService.chat as any).mockResolvedValue({ body: mockStream });
+    (applicationService.save as any).mockResolvedValue({
+      data: { id: 123 }
+    });
+
+    render(<Assistant />);
+    
+    // Trigger chat to get a response
+    const textarea = screen.getByPlaceholderText(/Pega aquí la descripción del empleo/i);
+    fireEvent.change(textarea, { target: { value: "Job offer" } });
+    fireEvent.click(screen.getByRole("button"));
+
+    // Wait for the response and the save toast to be visible
+    await waitFor(() => {
+      expect(screen.getByText(/Sí, guardar/i)).toBeInTheDocument();
+    });
+
+    // Click "Sí, guardar"
+    fireEvent.click(screen.getByText(/Sí, guardar/i));
+
+    // Wait for applicationService.save to be called and SaveSuccessToast to be visible
+    await waitFor(() => {
+      expect(applicationService.save).toHaveBeenCalled();
+      expect(screen.getByText(/¡Guardado con éxito!/i)).toBeInTheDocument();
+    });
+
+    // Click "Ver detalles"
+    fireEvent.click(screen.getByText(/Ver detalles/i));
+
+    // Verify navigation was called with the correct ID
+    expect(mockNavigate).toHaveBeenCalledWith("/application/123");
   });
 });

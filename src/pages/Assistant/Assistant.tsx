@@ -2,11 +2,13 @@ import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Send, User, Bot, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { assistantService } from "../../services/assistant.service";
 import { applicationService } from "../../services/application.service";
 import { cvTemplate } from "../../lib/constants";
 import { useAuth } from "../../context/AuthContext";
 import SaveToast from "../../components/Assistant/SaveToast";
+import SaveSuccessToast from "../../components/Assistant/SaveSuccessToast";
 import AssistantMenu from "../../components/Assistant/AssistantMenu";
 
 interface Message {
@@ -16,10 +18,13 @@ interface Message {
 }
 
 export default function Assistant() {
+  const navigate = useNavigate();
   const [jobDescription, setJobDescription] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [showSaveToast, setShowSaveToast] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [savedApplicationId, setSavedApplicationId] = useState<number | null>(null);
   const [hasPendingSave, setHasPendingSave] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [lastResponse, setLastResponse] = useState("");
@@ -127,9 +132,12 @@ export default function Assistant() {
         if (isNaN(payload.salary)) delete payload.salary;
       }
 
-      await applicationService.save(payload);
+      const response = await applicationService.save(payload);
+      const newId = response.data.id;
+      setSavedApplicationId(newId);
       setShowSaveToast(false);
       setHasPendingSave(false);
+      setShowSuccessToast(true);
     } catch (error) {
       console.error("Error saving application:", error);
     } finally {
@@ -269,6 +277,17 @@ export default function Assistant() {
         isSaving={isSaving}
         onSave={handleSaveApplication}
         onDismiss={() => setShowSaveToast(false)}
+      />
+
+      {/* Save Success Toast */}
+      <SaveSuccessToast
+        isVisible={showSuccessToast}
+        onNavigate={() => {
+          if (savedApplicationId) {
+            navigate(`/application/${savedApplicationId}`);
+          }
+        }}
+        onDismiss={() => setShowSuccessToast(false)}
       />
     </div>
   );

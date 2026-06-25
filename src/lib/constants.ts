@@ -1,7 +1,7 @@
 export const cvTemplate = `
 Ibrahim Ayodeji Sanusi
 Full Stack Developer | Node.js, TypeScript & React Specialist
-Madrid, España | ibra.sanusi.ayo@gmail.com
+España | +34 631 75 20 39 | ibra.sanusi.ayo@gmail.com
 github.com/ibraSanusi | linkedin.com/in/ibrahim-ayodeji-sanusi
 
 PERFIL PROFESIONAL
@@ -10,7 +10,7 @@ Ingeniero de software Full Stack con enfoque en rendimiento y escalabilidad de s
 EXPERIENCIA PROFESIONAL
 
 Full Stack Developer Junior · Fullcircle S.L.
-Jun 2025 – Actualidad • Madrid, España
+Jun 2025 – May 2026 • Madrid, España
 
 Optimización de arquitectura de pagos: Implementé procesamiento asíncrono mediante colas (Queues) y concurrencia con Promise.all, reduciendo el tiempo de bloqueo del servidor en 2 segundos por transacción y mejorando el rendimiento global del sistema en un 35%.
 
