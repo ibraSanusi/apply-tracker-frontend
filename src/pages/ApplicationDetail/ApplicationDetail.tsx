@@ -152,6 +152,11 @@ export default function ApplicationDetail() {
   const isFollowUpDue = diffDays > 0 && diffDays % 7 === 0;
 
   const handleFollowUp = async (message: string) => {
+    if (!id) {
+      setError("Missing application ID.");
+      setIsFollowingUp(false);
+      return;
+    }
     try {
       setFollowUpLoading(true);
       await applicationService.followUp(id, message);
